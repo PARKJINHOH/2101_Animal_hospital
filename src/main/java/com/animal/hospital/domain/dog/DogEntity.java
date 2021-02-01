@@ -1,10 +1,16 @@
 package com.animal.hospital.domain.dog;
 
 import com.animal.hospital.domain.owner.OwnerEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class DogEntity {
 
     @Id @GeneratedValue
