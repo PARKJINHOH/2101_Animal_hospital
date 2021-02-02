@@ -1,29 +1,25 @@
 package com.animal.hospital.domain.owner;
 
 import com.animal.hospital.domain.dog.DogEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class OwnerEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "OWNER_ID")
     private Long id;
 
     private String name;
 
-    @OneToMany(mappedBy = "ownerEntity")
+    @OneToMany(mappedBy = "ownerEntity", fetch = FetchType.EAGER)
     private List<DogEntity> dogList = new ArrayList<>();
-
-
-
 }

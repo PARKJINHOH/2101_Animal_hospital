@@ -1,16 +1,14 @@
 package com.animal.hospital.domain.dog;
 
 import com.animal.hospital.domain.owner.OwnerEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class DogEntity {
 
     @Id @GeneratedValue
@@ -19,7 +17,7 @@ public class DogEntity {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "OWNER_ID")
     private OwnerEntity ownerEntity;
 }
