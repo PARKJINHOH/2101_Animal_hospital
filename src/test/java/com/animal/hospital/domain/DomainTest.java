@@ -35,16 +35,19 @@ public class DomainTest {
     public void 데이터_저장() throws Exception {
 
         // given
-        OwnerEntity owner = new OwnerEntity();
-        owner.setName("주인");
+        OwnerEntity owner = OwnerEntity.builder()
+                .name("주인1")
+                .build();
 
-        DogEntity dog1 = new DogEntity();
-        dog1.setName("강아지1");
-        dog1.setOwnerEntity(owner);
+        DogEntity dog1 = DogEntity.builder()
+                .name("강아지1")
+                .ownerEntity(owner)
+                .build();
 
-        DogEntity dog2 = new DogEntity();
-        dog2.setName("강아지2");
-        dog2.setOwnerEntity(owner);
+        DogEntity dog2 = DogEntity.builder()
+                .name("강아지2")
+                .ownerEntity(owner)
+                .build();
 
         ownerRepository.save(owner);
         dogRepository.save(dog1);

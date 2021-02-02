@@ -1,8 +1,9 @@
 package com.animal.hospital.domain.owner;
 
 import com.animal.hospital.domain.dog.DogEntity;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor
 public class OwnerEntity {
 
     @Id
@@ -22,4 +23,9 @@ public class OwnerEntity {
 
     @OneToMany(mappedBy = "ownerEntity", fetch = FetchType.EAGER)
     private List<DogEntity> dogList = new ArrayList<>();
+
+    @Builder
+    public OwnerEntity(String name) {
+        this.name = name;
+    }
 }
