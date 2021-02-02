@@ -1,23 +1,26 @@
 package com.animal.hospital.domain.dog;
 
 import com.animal.hospital.domain.owner.OwnerEntity;
+import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class DogEntity {
 
     @Id @GeneratedValue
     @Column(name = "DOG_ID")
     private Long id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "OWNER_ID")
     private OwnerEntity ownerEntity;

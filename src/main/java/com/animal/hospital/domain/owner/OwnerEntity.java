@@ -1,9 +1,10 @@
 package com.animal.hospital.domain.owner;
 
 import com.animal.hospital.domain.dog.DogEntity;
+import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class OwnerEntity {
 
     @Id
@@ -19,6 +20,7 @@ public class OwnerEntity {
     @Column(name = "OWNER_ID")
     private Long id;
 
+    @NotNull
     private String name;
 
     @OneToMany(mappedBy = "ownerEntity", fetch = FetchType.EAGER)
