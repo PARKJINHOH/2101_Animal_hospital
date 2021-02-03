@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.charset.Charset;
 
-@RestController
 @RequiredArgsConstructor
+@RestController
 @RequestMapping("/api/dog")
 public class DogController {
 
     private final DogSerivce dogSerivce;
 
     // Dog 등록
-    @PostMapping("")
+    @PostMapping()
     public ResponseEntity<Message> register(@RequestBody DogDTO dogDTO) {
 
         Message message = new Message();
@@ -30,10 +30,9 @@ public class DogController {
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
         try {
-            message.setData(dogDTO);
+            DogDTO dogResult = dogSerivce.register(dogDTO);
 
-            dogSerivce.register(dogDTO);
-
+            message.setData(dogResult);
             message.setStatus(HttpStatusEnum.OK);
             message.setMessage("SUCCESS");
 
@@ -49,3 +48,4 @@ public class DogController {
 
 
 }
+
