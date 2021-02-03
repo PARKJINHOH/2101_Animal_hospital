@@ -3,7 +3,6 @@ package com.animal.hospital.domain.owner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +32,6 @@ public class OwnerControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(ownerController).build();
     }
 
-    @AfterEach
-    public void after() {
-        ownerRepository.deleteAll();
-    }
-
     @Test
     public void Owner_등록() throws Exception {
         // given
@@ -45,15 +39,18 @@ public class OwnerControllerTest {
         ownerDTO.setName("owner_test");
 
         String json = mapper.writeValueAsString(ownerDTO);
-        log.info("json : {}", json);
 
         // when
         ResultActions actions = mockMvc.perform(post("/api/owner")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
-                .content(json).accept(MediaType.APPLICATION_JSON)).andExpect(status().isCreated())
-                .andDo(print())
+                .content(json).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.data.name", Matchers.equalTo("owner_test")));
+
+        // then
+        actions
+                .andDo(print())
+                .andExpect(status().isCreated());
     }
 
 

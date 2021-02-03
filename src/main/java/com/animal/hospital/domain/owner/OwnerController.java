@@ -30,15 +30,15 @@ public class OwnerController {
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
         try {
-            OwnerEntity ownerResult =  ownerService.register(ownerDTO);
-            message.setData(ownerResult);
+            OwnerDTO ownerResult = ownerService.register(ownerDTO);
 
+            message.setData(ownerResult);
             message.setStatus(HttpStatusEnum.OK);
             message.setMessage("SUCCESS");
 
             return new ResponseEntity<>(message, headers, HttpStatus.CREATED);
         } catch (Exception e) {
-            message.setMessage(e.getMessage());
+            message.setMessage("fail : " + e.getMessage());
             return new ResponseEntity<>(message, headers, HttpStatus.BAD_REQUEST);
         }
 
