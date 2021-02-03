@@ -1,9 +1,5 @@
-package com.animal.hospital.domain;
+package com.animal.hospital.domain.owner;
 
-import com.animal.hospital.HospitalApplication;
-import com.animal.hospital.domain.owner.OwnerController;
-import com.animal.hospital.domain.owner.OwnerDTO;
-import com.animal.hospital.domain.owner.OwnerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
@@ -13,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -25,7 +20,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Slf4j
 @SpringBootTest
-@SpringJUnitConfig(HospitalApplication.class)
 public class OwnerControllerTest {
 
     @Autowired
