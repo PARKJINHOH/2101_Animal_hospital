@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,7 +27,7 @@ public class DogController {
 
         Message message = new Message();
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
 
         try {
             DogDTO dogResult = dogSerivce.register(dogDTO);
