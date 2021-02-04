@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -51,6 +53,39 @@ public class OwnerControllerTest {
         actions
                 .andDo(print())
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void 모든_회원_조회() throws Exception {
+        // given
+        OwnerEntity owner1 = OwnerEntity.builder()
+                .name("owner1")
+                .build();
+        OwnerEntity owner2 = OwnerEntity.builder()
+                .name("owner2")
+                .build();
+        OwnerEntity owner3 = OwnerEntity.builder()
+                .name("owner3")
+                .build();
+
+        ownerRepository.save(owner1);
+        ownerRepository.save(owner2);
+        ownerRepository.save(owner3);
+
+        // when
+        ResultActions actions = mockMvc.perform(get("/api/owner")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"))
+                .andExpect(jsonPath("$.data.[*]",hasSize(3)))
+                .andExpect(jsonPath("$.data.[0].name",Matchers.equalTo(owner1.getName())))
+                .andExpect(jsonPath("$.data.[1].name",Matchers.equalTo(owner2.getName())))
+                .andExpect(jsonPath("$.data.[2].name",Matchers.equalTo(owner3.getName())));
+
+        // then
+        actions
+                .andDo(print())
+                .andExpect(status().isOk());
+
     }
 
 
