@@ -20,4 +20,11 @@ public class DogDTO {
         this.ownerEntity = ownerEntity;
     }
 
+    public DogEntity toDogEntity(OwnerEntity ownerEntity) {
+        return DogEntity.builder()
+                .ownerEntity(ownerEntity)
+                .name(dogName)
+                .build();
+    }
+
 }

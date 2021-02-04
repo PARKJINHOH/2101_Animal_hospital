@@ -21,10 +21,7 @@ public class DogService {
         // OwnerEntity
         OwnerEntity owner = ownerRepository.findById(dogDTO.getOwnerEntity().getId()).get();
 
-        DogEntity dog = DogEntity.builder()
-                .name(dogDTO.getDogName())
-                .ownerEntity(owner)
-                .build();
+        DogEntity dog = dogDTO.toDogEntity(owner);
 
         DogEntity dogResult = dogRepository.save(dog);
 
