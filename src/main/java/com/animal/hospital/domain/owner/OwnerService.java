@@ -17,9 +17,7 @@ public class OwnerService {
     // Owner 등록
     public OwnerDTO register(OwnerDTO ownerDTO) {
 
-        OwnerEntity owner = OwnerEntity.builder()
-                .name(ownerDTO.getName())
-                .build();
+        OwnerEntity owner = ownerDTO.toOwnerEntity();
 
         OwnerEntity ownerResult = ownerRepository.save(owner);
 
@@ -31,9 +29,9 @@ public class OwnerService {
 
     public List<OwnerDTO> ownerFindAll() {
         List<OwnerEntity> ownerEntityList = ownerRepository.findAll();
-        List<OwnerDTO> ownerList = ownerEntityList.stream().map(p -> modelMapper.map(p, OwnerDTO.class)).collect(Collectors.toList());
 
-        return ownerList;
+        // List<OwnerEntity> -> List<OwnerDTO> Mapping
+        return ownerEntityList.stream().map(p -> modelMapper.map(p, OwnerDTO.class)).collect(Collectors.toList());
 
     }
 
