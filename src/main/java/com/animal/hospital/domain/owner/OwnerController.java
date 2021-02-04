@@ -24,7 +24,6 @@ public class OwnerController {
     public ResponseEntity<Message> ownerRegister(@RequestBody OwnerDTO ownerDTO) {
 
         Message message = new Message();
-        HttpHeaders headers = getHeaders();
 
         try {
             OwnerDTO ownerResult = ownerService.register(ownerDTO);
@@ -33,10 +32,10 @@ public class OwnerController {
             message.setStatus(HttpStatusEnum.OK);
             message.setMessage("SUCCESS");
 
-            return new ResponseEntity<>(message, headers, HttpStatus.CREATED);
+            return new ResponseEntity<>(message, jsonHeaders(), HttpStatus.CREATED);
         } catch (Exception e) {
             message.setMessage("FAIL : " + e.getMessage());
-            return new ResponseEntity<>(message, headers, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(message, jsonHeaders(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -45,7 +44,6 @@ public class OwnerController {
     public ResponseEntity<Message> ownerFindAll() {
 
         Message message = new Message();
-        HttpHeaders headers = getHeaders();
 
         try {
             List<OwnerDTO> ownerDTOS = ownerService.ownerFindAll();
@@ -54,14 +52,14 @@ public class OwnerController {
             message.setStatus(HttpStatusEnum.OK);
             message.setMessage("SUCCESS");
 
-            return new ResponseEntity<>(message, headers, HttpStatus.OK);
+            return new ResponseEntity<>(message, jsonHeaders(), HttpStatus.OK);
         } catch (Exception e) {
             message.setMessage("FAIL : " + e.getMessage());
-            return new ResponseEntity<>(message, headers, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(message, jsonHeaders(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    private HttpHeaders getHeaders() {
+    private HttpHeaders jsonHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
         return headers;
