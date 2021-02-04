@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 @RequestMapping("/api/dog")
 public class DogController {
 
-    private final DogSerivce dogSerivce;
+    private final DogService dogSerivce;
 
     // Dog 등록
     @PostMapping()
