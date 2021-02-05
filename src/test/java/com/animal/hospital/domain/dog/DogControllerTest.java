@@ -46,9 +46,11 @@ public class DogControllerTest {
                 .build();
         ownerRepository.save(owner);
 
+        OwnerEntity ownerEntity = ownerRepository.findById(owner.getId()).get();
+
         // 강아지 등록
         DogDTO dogDTO = DogDTO.builder()
-                .ownerEntity(owner)
+                .ownerEntity(ownerEntity)
                 .dogName("first_dog")
                 .build();
 

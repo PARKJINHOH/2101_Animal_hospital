@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/dog")
 public class DogController {
 
-    private final DogService dogSerivce;
+    private final DogSerivce dogSerivce;
 
     // Dog 등록
     @PostMapping()
@@ -27,7 +27,7 @@ public class DogController {
 
         Message message = new Message();
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
         try {
             DogDTO dogResult = dogSerivce.register(dogDTO);
