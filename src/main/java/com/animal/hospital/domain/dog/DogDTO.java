@@ -13,7 +13,6 @@ public class DogDTO {
     private String dogName;
     private OwnerEntity ownerEntity;
 
-
     @Builder
     public DogDTO(Long id, String dogName, OwnerEntity ownerEntity) {
         this.id = id;
@@ -21,7 +20,7 @@ public class DogDTO {
         this.ownerEntity = ownerEntity;
     }
 
-    public DogEntity toDogEntity() {
+    public DogEntity toDogEntity(OwnerEntity ownerEntity) {
         return DogEntity.builder()
                 .ownerEntity(ownerEntity)
                 .name(dogName)

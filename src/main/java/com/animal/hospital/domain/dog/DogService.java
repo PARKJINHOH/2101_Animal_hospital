@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DogSerivce {
+public class DogService {
 
 
     private final ModelMapper modelMapper;
@@ -19,12 +19,9 @@ public class DogSerivce {
     public DogDTO register(DogDTO dogDTO) {
 
         // OwnerEntity
-        OwnerEntity dogOnwer = ownerRepository.findById(dogDTO.getOwnerEntity().getId()).get();
+        OwnerEntity owner = ownerRepository.findById(dogDTO.getOwnerEntity().getId()).get();
 
-        DogEntity dog = DogEntity.builder()
-                .name(dogDTO.getDogName())
-                .ownerEntity(dogOnwer)
-                .build();
+        DogEntity dog = dogDTO.toDogEntity(owner);
 
         DogEntity dogResult = dogRepository.save(dog);
 

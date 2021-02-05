@@ -7,12 +7,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,13 +19,11 @@ public class OwnerController {
 
     private final OwnerService ownerService;
 
-    // 등록
+    // 회원 등록
     @PostMapping()
     public ResponseEntity<Message> ownerRegister(@RequestBody OwnerDTO ownerDTO) {
 
         Message message = new Message();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
         try {
             OwnerDTO ownerResult = ownerService.register(ownerDTO);
@@ -36,14 +32,37 @@ public class OwnerController {
             message.setStatus(HttpStatusEnum.OK);
             message.setMessage("SUCCESS");
 
-            return new ResponseEntity<>(message, headers, HttpStatus.CREATED);
+            return new ResponseEntity<>(message, jsonHeaders(), HttpStatus.CREATED);
         } catch (Exception e) {
-            message.setMessage("fail : " + e.getMessage());
-            return new ResponseEntity<>(message, headers, HttpStatus.BAD_REQUEST);
+            message.setMessage("FAIL : " + e.getMessage());
+            return new ResponseEntity<>(message, jsonHeaders(), HttpStatus.BAD_REQUEST);
         }
-
     }
 
-    // 조회
+    // 모든 회원 조회
+    @GetMapping()
+    public ResponseEntity<Message> ownerFindAll() {
+
+        Message message = new Message();
+
+        try {
+            List<OwnerDTO> ownerDTOS = ownerService.ownerFindAll();
+
+            message.setData(ownerDTOS);
+            message.setStatus(HttpStatusEnum.OK);
+            message.setMessage("SUCCESS");
+
+            return new ResponseEntity<>(message, jsonHeaders(), HttpStatus.OK);
+        } catch (Exception e) {
+            message.setMessage("FAIL : " + e.getMessage());
+            return new ResponseEntity<>(message, jsonHeaders(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private HttpHeaders jsonHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
+        return headers;
+    }
 
 }
