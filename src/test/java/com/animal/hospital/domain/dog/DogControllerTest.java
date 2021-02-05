@@ -1,5 +1,6 @@
 package com.animal.hospital.domain.dog;
 
+import com.animal.hospital.domain.owner.OwnerDTO;
 import com.animal.hospital.domain.owner.OwnerEntity;
 import com.animal.hospital.domain.owner.OwnerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,9 +47,16 @@ public class DogControllerTest {
                 .build();
         ownerRepository.save(owner);
 
+
+        OwnerDTO ownerDTO = OwnerDTO.builder()
+                // todo : Front에서 id를 줄껀지, name으로 find 해야할지 생각하기
+                .id(owner.getId())
+                .name(owner.getName())
+                .build();
+
         // 강아지 등록
         DogDTO dogDTO = DogDTO.builder()
-                .ownerEntity(owner)
+                .owner(ownerDTO)
                 .dogName("first_dog")
                 .build();
 
@@ -59,14 +67,14 @@ public class DogControllerTest {
         ResultActions actions = mockMvc.perform(post("/api/dog")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
-                .content(json).accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.data.dogName", Matchers.equalTo("first_dog")))
-                .andExpect(jsonPath("$.data.ownerEntity.name", Matchers.equalTo("owner_one")));
+                .content(json).accept(MediaType.APPLICATION_JSON));
 
         // then
         actions
                 .andDo(print())
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.dogName", Matchers.equalTo("first_dog")))
+                .andExpect(jsonPath("$.data.owner.name", Matchers.equalTo("owner_one")));
 
     }
 

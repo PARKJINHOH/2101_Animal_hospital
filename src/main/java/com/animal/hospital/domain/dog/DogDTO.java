@@ -1,5 +1,6 @@
 package com.animal.hospital.domain.dog;
 
+import com.animal.hospital.domain.owner.OwnerDTO;
 import com.animal.hospital.domain.owner.OwnerEntity;
 import lombok.Builder;
 import lombok.Data;
@@ -11,20 +12,19 @@ public class DogDTO {
 
     private Long id;
     private String dogName;
-    private OwnerEntity ownerEntity;
+    private OwnerDTO owner;
 
     @Builder
-    public DogDTO(Long id, String dogName, OwnerEntity ownerEntity) {
+    public DogDTO(Long id, String dogName, OwnerDTO owner) {
         this.id = id;
         this.dogName = dogName;
-        this.ownerEntity = ownerEntity;
+        this.owner = owner;
     }
 
-    public DogEntity toDogEntity(OwnerEntity ownerEntity) {
+    public DogEntity toDogEntity(OwnerEntity owner) {
         return DogEntity.builder()
-                .ownerEntity(ownerEntity)
+                .owner(owner)
                 .name(dogName)
                 .build();
     }
-
 }

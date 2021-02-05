@@ -23,12 +23,12 @@ public class DogEntity {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "OWNER_ID")
-    private OwnerEntity ownerEntity;
+    private OwnerEntity owner;
 
 
     @Builder
-    public DogEntity(String name, OwnerEntity ownerEntity) {
+    public DogEntity(String name, OwnerEntity owner) {
         this.name = name;
-        this.ownerEntity = ownerEntity;
+        this.owner = owner;
     }
 }

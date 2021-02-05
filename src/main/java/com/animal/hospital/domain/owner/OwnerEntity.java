@@ -23,7 +23,7 @@ public class OwnerEntity {
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "ownerEntity", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<DogEntity> dogList = new ArrayList<>();
 
     @Builder
