@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 @RequestMapping("/api/dog")
 public class DogController {
 
-    private final DogService dogSerivce;
+    private final DogService dogService;
 
     // Dog 등록
     @PostMapping()
@@ -30,7 +30,7 @@ public class DogController {
         headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
 
         try {
-            DogDTO dogResult = dogSerivce.register(dogDTO);
+            DogDTO dogResult = dogService.register(dogDTO);
 
             message.setData(dogResult);
             message.setStatus(HttpStatusEnum.OK);
