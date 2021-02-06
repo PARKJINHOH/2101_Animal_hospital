@@ -27,8 +27,14 @@ public class OwnerService {
                 .build();
     }
 
-    public List<OwnerDTO> ownerFindAll() {
-        List<OwnerEntity> ownerEntityList = ownerRepository.findAll();
+    public List<OwnerDTO> ownerFindAll(String name) {
+        List<OwnerEntity> ownerEntityList;
+
+        if(name == null){
+            ownerEntityList = ownerRepository.findAll();
+        } else {
+            ownerEntityList = ownerRepository.findAllByName(name);
+        }
 
         // List<OwnerEntity> -> List<OwnerDTO> Mapping
         return ownerEntityList.stream().map(p -> modelMapper.map(p, OwnerDTO.class)).collect(Collectors.toList());

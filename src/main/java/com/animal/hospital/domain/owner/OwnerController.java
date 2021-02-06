@@ -41,12 +41,12 @@ public class OwnerController {
 
     // 모든 회원 조회
     @GetMapping()
-    public ResponseEntity<Message> ownerFindAll() {
+    public ResponseEntity<Message> ownerFindAll(@RequestParam(value = "name", required = false) String name) {
 
         Message message = new Message();
 
         try {
-            List<OwnerDTO> ownerDTOS = ownerService.ownerFindAll();
+            List<OwnerDTO> ownerDTOS = ownerService.ownerFindAll(name);
 
             message.setData(ownerDTOS);
             message.setStatus(HttpStatusEnum.OK);
@@ -61,7 +61,7 @@ public class OwnerController {
 
     // 단일 회원 조회
     @GetMapping("/{ownerName}")
-    public ResponseEntity<Message> ownerFind(@PathVariable String ownerName){
+    public ResponseEntity<Message> ownerFind(@PathVariable String ownerName) {
         Message message = new Message();
 
         try {
