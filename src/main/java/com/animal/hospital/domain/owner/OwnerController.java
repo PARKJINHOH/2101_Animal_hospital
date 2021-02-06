@@ -59,6 +59,25 @@ public class OwnerController {
         }
     }
 
+    // 단일 회원 조회
+    @GetMapping("/{ownerName}")
+    public ResponseEntity<Message> ownerFind(@PathVariable String ownerName){
+        Message message = new Message();
+
+        try {
+            OwnerDTO ownerDTO = ownerService.ownerFind(ownerName);
+
+            message.setData(ownerDTO);
+            message.setStatus(HttpStatusEnum.OK);
+            message.setMessage("SUCCESS");
+
+            return new ResponseEntity<>(message, jsonHeaders(), HttpStatus.OK);
+        } catch (Exception e) {
+            message.setMessage("FAIL : " + e.getMessage());
+            return new ResponseEntity<>(message, jsonHeaders(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     private HttpHeaders jsonHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
