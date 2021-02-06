@@ -36,4 +36,11 @@ public class OwnerService {
     }
 
 
+    public OwnerDTO ownerFind(String ownerName) {
+
+        OwnerEntity ownerEntity = ownerRepository.findByName(ownerName).get();
+
+        return modelMapper.map(ownerEntity, OwnerDTO.class);
+
+    }
 }
