@@ -60,12 +60,12 @@ public class OwnerController {
     }
 
     // 단일 회원 조회
-    @GetMapping("/{ownerName}")
-    public ResponseEntity<Message> ownerFind(@PathVariable String ownerName) {
+    @GetMapping("/{ownerId}")
+    public ResponseEntity<Message> ownerFind(@PathVariable Long ownerId) {
         Message message = new Message();
 
         try {
-            OwnerDTO ownerDTO = ownerService.ownerFind(ownerName);
+            OwnerDTO ownerDTO = ownerService.ownerFindId(ownerId);
 
             message.setData(ownerDTO);
             message.setStatus(HttpStatusEnum.OK);
