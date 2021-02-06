@@ -46,13 +46,14 @@ public class OwnerControllerTest {
         ResultActions actions = mockMvc.perform(post("/api/owner")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
-                .content(json).accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.data.name", Matchers.equalTo("owner_test")));
+                .content(json).accept(MediaType.APPLICATION_JSON));
+
 
         // then
         actions
                 .andDo(print())
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.name", Matchers.equalTo("owner_test")));
     }
 
     @Test
@@ -76,15 +77,15 @@ public class OwnerControllerTest {
         ResultActions actions = mockMvc.perform(get("/api/owner")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"))
-                .andExpect(jsonPath("$.data.[*]",hasSize(3)))
-                .andExpect(jsonPath("$.data.[0].name",Matchers.equalTo(owner1.getName())))
-                .andExpect(jsonPath("$.data.[1].name",Matchers.equalTo(owner2.getName())))
-                .andExpect(jsonPath("$.data.[2].name",Matchers.equalTo(owner3.getName())));
+                .andExpect(jsonPath("$.data.[*]",hasSize(3)));
 
         // then
         actions
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.[0].name",Matchers.equalTo(owner1.getName())))
+                .andExpect(jsonPath("$.data.[1].name",Matchers.equalTo(owner2.getName())))
+                .andExpect(jsonPath("$.data.[2].name",Matchers.equalTo(owner3.getName())));
 
     }
 

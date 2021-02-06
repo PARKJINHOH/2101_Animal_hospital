@@ -41,12 +41,12 @@ public class DomainTest {
 
         DogEntity dog1 = DogEntity.builder()
                 .name("강아지1")
-                .ownerEntity(owner)
+                .owner(owner)
                 .build();
 
         DogEntity dog2 = DogEntity.builder()
                 .name("강아지2")
-                .ownerEntity(owner)
+                .owner(owner)
                 .build();
 
         ownerRepository.save(owner);
@@ -56,11 +56,11 @@ public class DomainTest {
         // when
         System.out.println("---------------------");
         DogEntity dogEntity = dogRepository.findById(dog1.getId()).get();
-        List<DogEntity> dogEntityList = dogEntity.getOwnerEntity().getDogList();
+        List<DogEntity> dogEntityList = dogEntity.getOwner().getDogList();
 
         // then
         for (DogEntity dogs : dogEntityList) {
-            log.info("{} : {}", dogs.getOwnerEntity().getName(), dogs.getName());
+            log.info("{} : {}", dogs.getOwner().getName(), dogs.getName());
             assertThat(dogEntityList.size()).isNotNull();
 
         }
