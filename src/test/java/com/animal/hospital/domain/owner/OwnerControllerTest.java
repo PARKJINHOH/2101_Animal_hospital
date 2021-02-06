@@ -140,11 +140,11 @@ public class OwnerControllerTest {
         ownerRepository.save(owner2);
 
         // when
-        ResultActions getOwner1 = mockMvc.perform(get("/api/owner/owner1")
+        ResultActions getOwner1 = mockMvc.perform(get("/api/owner/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"));
 
-        ResultActions getOwner2 = mockMvc.perform(get("/api/owner/owner2")
+        ResultActions getOwner2 = mockMvc.perform(get("/api/owner/2")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"));
 
