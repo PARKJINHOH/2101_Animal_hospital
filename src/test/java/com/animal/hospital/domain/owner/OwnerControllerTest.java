@@ -23,6 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class OwnerControllerTest {
 
+    // todo : @beforeAll 사용하여 데이터 저장하기
+
     @Autowired
     private OwnerRepository ownerRepository;
 
@@ -47,7 +49,6 @@ public class OwnerControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(json).accept(MediaType.APPLICATION_JSON));
-
 
         // then
         actions
@@ -86,6 +87,42 @@ public class OwnerControllerTest {
                 .andExpect(jsonPath("$.data.[0].name",Matchers.equalTo(owner1.getName())))
                 .andExpect(jsonPath("$.data.[1].name",Matchers.equalTo(owner2.getName())))
                 .andExpect(jsonPath("$.data.[2].name",Matchers.equalTo(owner3.getName())));
+
+
+    }
+
+    @Test
+    public void 회원_조회() throws Exception {
+        // given
+        OwnerEntity owner1 = OwnerEntity.builder()
+                .name("owner1")
+                .build();
+        OwnerEntity owner2 = OwnerEntity.builder()
+                .name("owner2")
+                .build();
+        OwnerEntity owner3 = OwnerEntity.builder()
+                .name("owner3")
+                .build();
+        OwnerEntity owner3_1 = OwnerEntity.builder()
+                .name("owner3")
+                .build();
+
+        ownerRepository.save(owner1);
+        ownerRepository.save(owner2);
+        ownerRepository.save(owner3);
+        ownerRepository.save(owner3_1); // 이름 중복회원
+
+        /* name Param */
+        ResultActions paramAction = mockMvc.perform(get("/api/owner?name=owner3")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"));
+
+        paramAction
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.[0].name",Matchers.equalTo(owner3.getName())))
+                .andExpect(jsonPath("$.data.[1].name",Matchers.equalTo(owner3.getName())));
+
 
     }
 
