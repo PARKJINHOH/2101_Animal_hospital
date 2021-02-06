@@ -76,18 +76,54 @@ public class OwnerControllerTest {
         // when
         ResultActions actions = mockMvc.perform(get("/api/owner")
                 .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8"))
-                .andExpect(jsonPath("$.data.[*]",hasSize(3)));
+                .characterEncoding("UTF-8"));
 
         // then
         actions
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.[*]",hasSize(3)))
                 .andExpect(jsonPath("$.data.[0].name",Matchers.equalTo(owner1.getName())))
                 .andExpect(jsonPath("$.data.[1].name",Matchers.equalTo(owner2.getName())))
                 .andExpect(jsonPath("$.data.[2].name",Matchers.equalTo(owner3.getName())));
 
     }
+
+    @Test
+    public void 단일_회원_조회() throws Exception {
+        // given
+        OwnerEntity owner1 = OwnerEntity.builder()
+                .name("owner1")
+                .build();
+        OwnerEntity owner2 = OwnerEntity.builder()
+                .name("owner2")
+                .build();
+
+        ownerRepository.save(owner1);
+        ownerRepository.save(owner2);
+
+        // when
+        ResultActions getOwner1 = mockMvc.perform(get("/api/owner/owner1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"));
+
+        ResultActions getOwner2 = mockMvc.perform(get("/api/owner/owner2")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"));
+
+        // then
+        getOwner1
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.name",Matchers.equalTo(owner1.getName())));
+
+        getOwner2
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.name",Matchers.equalTo(owner2.getName())));
+
+    }
+
 
 
 }
