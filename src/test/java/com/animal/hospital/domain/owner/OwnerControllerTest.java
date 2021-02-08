@@ -13,8 +13,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -161,6 +160,23 @@ public class OwnerControllerTest {
 
     }
 
+    @Test
+    public void Dog_삭제() throws Exception {
+        // given
+        OwnerEntity owner = OwnerEntity.builder()
+                .name("owner")
+                .build();
+        ownerRepository.save(owner);
 
+        // when
+        ResultActions actions = mockMvc.perform(delete("/api/owner/" + owner.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"));
+
+        // then
+        actions.
+                andDo(print())
+                .andExpect(status().isOk());
+    }
 
 }
