@@ -41,4 +41,8 @@ public class DogService {
         return modelMapper.map(dogResult, DogDTO.class);
 
     }
+
+    public void delete(Long id) {
+        dogRepository.deleteById(id);
+    }
 }

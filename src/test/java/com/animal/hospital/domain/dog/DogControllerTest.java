@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -26,6 +27,9 @@ public class DogControllerTest {
 
     @Autowired
     private OwnerRepository ownerRepository;
+
+    @Autowired
+    private DogRepository dogRepository;
 
     private MockMvc mockMvc;
 
@@ -76,6 +80,31 @@ public class DogControllerTest {
                 .andExpect(jsonPath("$.data.dogName", Matchers.equalTo("first_dog")))
                 .andExpect(jsonPath("$.data.owner.name", Matchers.equalTo("owner_one")));
 
+    }
+
+    @Test
+    public void Dog_삭제() throws Exception {
+        // given
+        OwnerEntity owner = OwnerEntity.builder()
+                .name("owner")
+                .build();
+        ownerRepository.save(owner);
+
+        DogEntity senChu = DogEntity.builder()
+                .name("senChu")
+                .owner(owner)
+                .build();
+        dogRepository.save(senChu);
+
+        // when
+        ResultActions actions = mockMvc.perform(delete("/api/dog/" + senChu.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"));
+
+        // then
+        actions.
+                andDo(print())
+                .andExpect(status().isOk());
     }
 
 }
