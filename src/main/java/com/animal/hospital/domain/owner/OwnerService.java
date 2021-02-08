@@ -49,4 +49,8 @@ public class OwnerService {
         return modelMapper.map(ownerEntity, OwnerDTO.class);
 
     }
+
+    public void delete(Long id) {
+        ownerRepository.deleteById(id);
+    }
 }

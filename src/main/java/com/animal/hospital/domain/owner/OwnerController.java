@@ -3,6 +3,7 @@ package com.animal.hospital.domain.owner;
 import com.animal.hospital.domain.http.HttpStatusEnum;
 import com.animal.hospital.domain.http.Message;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/owner")
@@ -77,6 +79,22 @@ public class OwnerController {
             return new ResponseEntity<>(message, jsonHeaders(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        ResponseEntity<String> entity;
+
+        try {
+            ownerService.delete(id);
+            entity = new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            entity = new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        return entity;
+
+    }
+
 
     private HttpHeaders jsonHeaders() {
         HttpHeaders headers = new HttpHeaders();

@@ -3,17 +3,16 @@ package com.animal.hospital.domain.dog;
 import com.animal.hospital.domain.http.HttpStatusEnum;
 import com.animal.hospital.domain.http.Message;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/dog")
@@ -21,7 +20,7 @@ public class DogController {
 
     private final DogService dogService;
 
-    // Dog 등록
+
     @PostMapping()
     public ResponseEntity<Message> register(@RequestBody DogDTO dogDTO) {
 
@@ -44,7 +43,23 @@ public class DogController {
     }
 
 
-    // 조회
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        ResponseEntity<String> entity;
+
+        try {
+            dogService.delete(id);
+            entity = new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            entity = new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        return entity;
+
+    }
+
+
+    // todo : 조회
 
 
 }
