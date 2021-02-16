@@ -48,10 +48,9 @@ public class OwnerController {
         Message message = new Message();
 
         try {
-            List<OwnerDTO> ownerDTOS = ownerService.ownerFindAll(name);
-            ownerDTOS.forEach(ownerDTO -> ownerDTO.setDogList(null));
+            List<OwnerDTO> owners = ownerService.ownerFindAll(name);
 
-            message.setData(ownerDTOS);
+            message.setData(owners);
             message.setStatus(HttpStatusEnum.OK);
             message.setMessage("SUCCESS");
 

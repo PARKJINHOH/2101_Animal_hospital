@@ -1,7 +1,7 @@
 package com.animal.hospital.domain.dog;
 
 import com.animal.hospital.domain.owner.OwnerEntity;
-import com.sun.istack.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +17,10 @@ public class DogEntity {
     @Column(name = "DOG_ID")
     private Long id;
 
-    @NotNull
     private String name;
 
-    @NotNull
-    @ManyToOne
+    @JsonIgnoreProperties({"dog"})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "OWNER_ID")
     private OwnerEntity owner;
 
