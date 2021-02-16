@@ -3,6 +3,7 @@ package com.animal.hospital.domain.dog;
 import com.animal.hospital.domain.owner.OwnerEntity;
 import com.animal.hospital.domain.owner.OwnerRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.collection.spi.PersistentCollection;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,8 @@ public class DogService {
             }
         };
         */
+        modelMapper.getConfiguration().setPropertyCondition(
+                context -> !(context.getSource() instanceof PersistentCollection));
 
         return modelMapper.map(dogResult, DogDTO.class);
 

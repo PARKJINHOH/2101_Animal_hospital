@@ -61,7 +61,7 @@ public class DogControllerTest {
         // 강아지 등록
         DogDTO dogDTO = DogDTO.builder()
                 .owner(ownerDTO)
-                .dogName("first_dog")
+                .name("first_dog")
                 .build();
 
         String json = mapper.writeValueAsString(dogDTO);
@@ -77,8 +77,7 @@ public class DogControllerTest {
         actions
                 .andDo(print())
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.data.dogName", Matchers.equalTo("first_dog")))
-                .andExpect(jsonPath("$.data.owner.name", Matchers.equalTo("owner_one")));
+                .andExpect(jsonPath("$.data.name", Matchers.equalTo("first_dog")));
 
     }
 
