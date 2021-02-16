@@ -2,12 +2,14 @@ package com.animal.hospital.domain.dog;
 
 import com.animal.hospital.domain.owner.OwnerDTO;
 import com.animal.hospital.domain.owner.OwnerEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DogDTO {
 
     private Long id;

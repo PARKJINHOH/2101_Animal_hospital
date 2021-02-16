@@ -30,6 +30,7 @@ public class DogController {
 
         try {
             DogDTO dogResult = dogService.register(dogDTO);
+            dogResult.getOwner().setDogList(null);
 
             message.setData(dogResult);
             message.setStatus(HttpStatusEnum.OK);

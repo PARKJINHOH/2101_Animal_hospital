@@ -49,6 +49,7 @@ public class OwnerController {
 
         try {
             List<OwnerDTO> ownerDTOS = ownerService.ownerFindAll(name);
+            ownerDTOS.forEach(ownerDTO -> ownerDTO.setDogList(null));
 
             message.setData(ownerDTOS);
             message.setStatus(HttpStatusEnum.OK);
@@ -68,6 +69,8 @@ public class OwnerController {
 
         try {
             OwnerDTO ownerDTO = ownerService.ownerFindId(ownerId);
+
+            ownerDTO.getDogList().forEach(dogDTO -> dogDTO.setOwner(null));
 
             message.setData(ownerDTO);
             message.setStatus(HttpStatusEnum.OK);
