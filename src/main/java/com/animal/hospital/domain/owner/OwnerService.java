@@ -1,6 +1,7 @@
 package com.animal.hospital.domain.owner;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.collection.spi.PersistentCollection;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +31,14 @@ public class OwnerService {
     public List<OwnerDTO> ownerFindAll(String name) {
         List<OwnerEntity> ownerEntityList;
 
-        if(name == null){
+        if (name == null) {
             ownerEntityList = ownerRepository.findAll();
         } else {
             ownerEntityList = ownerRepository.findAllByName(name);
         }
+
+        modelMapper.getConfiguration().setPropertyCondition(
+                context -> !(context.getSource() instanceof PersistentCollection));
 
         // List<OwnerEntity> -> List<OwnerDTO> Mapping
         return ownerEntityList.stream().map(p -> modelMapper.map(p, OwnerDTO.class)).collect(Collectors.toList());

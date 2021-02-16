@@ -1,7 +1,6 @@
 package com.animal.hospital.domain.owner;
 
 import com.animal.hospital.domain.dog.DogEntity;
-import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +19,9 @@ public class OwnerEntity {
     @Column(name = "OWNER_ID")
     private Long id;
 
-    @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "owner")
     private List<DogEntity> dogList = new ArrayList<>();
 
     @Builder
