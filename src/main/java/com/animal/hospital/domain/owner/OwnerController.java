@@ -69,8 +69,6 @@ public class OwnerController {
         try {
             OwnerDTO ownerDTO = ownerService.ownerFindId(ownerId);
 
-            ownerDTO.getDogList().forEach(dogDTO -> dogDTO.setOwner(null));
-
             message.setData(ownerDTO);
             message.setStatus(HttpStatusEnum.OK);
             message.setMessage("SUCCESS");
